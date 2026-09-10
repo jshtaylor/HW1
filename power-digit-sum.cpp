@@ -6,6 +6,8 @@
 #include <cctype>
 #include <vector>
 #include <numeric>
+#include <cmath>
+
 
 
 bool isPositiveNumber(const std::string& str); // name functions before main
@@ -35,15 +37,19 @@ std::string vec_to_string(const std::vector<int> vec);
 		
 		unsigned int a = static_cast<unsigned int>(std::stoi(inputA)); // string to int
         unsigned int b = static_cast<unsigned int>(std::stoi(inputB));
+       if( b == 0 || a == 0 || b * log10(a) < 64 * log10(2)){
 		
-		unsigned long long int expoVal = power(a, b); //calculate expo
-        //short sum = digitSum(expoVal); old code, leave for posterities sake
-        std::vector<int> vecResult = vectorize_digits(expoVal);
-        //std::cout << vec_to_string(vecResult) << " result of vecorize_digits\n"; test string
-        int sum = sum_vector(vecResult);
+			unsigned long long int expoVal = power(a, b); //calculate expo
+			//short sum = digitSum(expoVal); old code, leave for posterities sake
+			std::vector<int> vecResult = vectorize_digits(expoVal);
+			//std::cout << vec_to_string(vecResult) << " result of vecorize_digits\n"; test string
+			int sum = sum_vector(vecResult);
 
-        std::cout << a << "^" << b << " = " << expoVal << "\n"; // prints out the a ^ b = n
-        std::cout << "Digit sum: " << sum << "\n"; // prints out the sum of the digits
+			std::cout << a << " ^ " << b << " = " << expoVal << "\n"; // prints out the a ^ b = n
+			std::cout << "Digit sum: " << sum << "\n"; // prints out the sum of the digits
+		} else{
+				std::cout << "Error: Integer overflow, try smaller values. \n"; // incase of over flow
+		}
     } else {
         std::cout << "Error: Inputs must be positive integers.\n"; // other type of error is addressed
         return 1;
@@ -68,8 +74,8 @@ unsigned long long int power(unsigned int a, unsigned int b) {
 	//simple recursive power function
     if (b == 0) return 1;
     
-    unsigned int halfPower = power(a, b / 2);
-    unsigned int square = halfPower * halfPower;
+    unsigned long long int halfPower = power(a, b / 2);
+    unsigned long long int square = halfPower * halfPower;
     
     return (b % 2 == 0) ? square : a * square;
 }
@@ -94,7 +100,7 @@ std::vector<int> vectorize_digits(unsigned long long n){
 		}
 	//std::cout << vec_to_string(vec) << " unflipped\n";
 	std::reverse(vec.begin(),vec.end());
-	std::cout << vec_to_string(vec) << " flipped\n";
+	//std::cout << vec_to_string(vec) << " flipped\n";
 	return vec;
 	}
 	
