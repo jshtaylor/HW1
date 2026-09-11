@@ -93,23 +93,26 @@ unsigned int digitSum( unsigned long long int expo){
 	}
 	
 std::vector<int> vectorize_digits(unsigned long long n){
+	//turns integer into a vector of digits
 	std::vector<int> vec;
 	while(n != 0){
 		vec.push_back(n % 10);
 		n /= 10;
 		}
 	//std::cout << vec_to_string(vec) << " unflipped\n";
-	std::reverse(vec.begin(),vec.end());
+	std::reverse(vec.begin(),vec.end()); // how i wrote this it gets added from the back and thus needs to be flipped around
 	//std::cout << vec_to_string(vec) << " flipped\n";
 	return vec;
 	}
 	
 int sum_vector(const std::vector<int> v){
+	//sum of the vector, built in function b/c it works
 	int sum = std::accumulate(v.begin(),v.end(),0);
 	return sum;
 	}
 	
 std::string vec_to_string(const std::vector<int> vec){
+	//turns an int vector into a string that matches the format, doesn't inherinily print but can be printed with cout and a function call
 	std::string str ="[";
 	for(long unsigned int i =0; i < vec.size(); i++){
 		if(i != vec.size() - 1){
